@@ -6,7 +6,7 @@
 /*   By: wkorande <wkorande@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 20:43:47 by wkorande          #+#    #+#             */
-/*   Updated: 2020/01/20 22:03:39 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/01/20 22:04:29 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,27 +140,10 @@ private:
 			createInfo.pNext = nullptr;
 		}
 
-		//uint32_t glfwExtensionCount = 0;
-		//const char **glfwExtensions;
-
-		//glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
-		//createInfo.enabledExtensionCount = glfwExtensionCount;
-		//createInfo.ppEnabledExtensionNames = glfwExtensions;
-		//createInfo.enabledLayerCount = 0;
-
 		if (vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS)
 		{
 			throw std::runtime_error("failed to create instance!");
 		}
-		//uint32_t extensionCount = 0;
-		//vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
-		//std::vector<VkExtensionProperties> extensions(extensionCount);
-		//vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, extensions.data());
-		//std::cout << "available extensions:" << std::endl;
-		//for (const auto &extension : extensions)
-		//{
-		//	std::cout << "\t" << extension.extensionName << std::endl;
-		//}
 	}
 
 	void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &createInfo)
