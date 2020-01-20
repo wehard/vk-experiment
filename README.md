@@ -9,4 +9,4 @@
 - Create framebuffers for render pass
 - Set up graphics pipeline
 - Allocate and record a command buffer with draw commands for every swap chain image
-- Draw frames by acquiring images, submitting draw command buffer and returning images to 	the swap chain
+- Draw frames by acquiring images, submitting draw command buffer and returning images to  the swap chain
