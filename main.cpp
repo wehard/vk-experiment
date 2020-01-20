@@ -1,6 +1,5 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
-
 #include <iostream>
 #include <stdexcept>
 #include <functional>
@@ -69,33 +68,39 @@ private:
 		}
 	}
 
-	void initVulkan() {
+	void initVulkan()
+	{
 		createInstance();
 	}
 
-	void mainLoop() {
+	void mainLoop()
+	{
 		while (!glfwWindowShouldClose(window))
 		{
 			glfwPollEvents();
 		}
 	}
 
-	void cleanup() {
+	void cleanup()
+	{
 		vkDestroyInstance(instance, nullptr);
 		glfwDestroyWindow(window);
 		glfwTerminate();
 	}
 };
 
-int main() {
+int main()
+{
 	VulkanApplication app;
 
-	try {
+	try
+	{
 		app.run();
-	} catch (const std::exception& e) {
-		std::cerr << e.what() << std::endl;
-		return EXIT_FAILURE;
 	}
-
-	return EXIT_SUCCESS;
+	catch (const std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
 }
