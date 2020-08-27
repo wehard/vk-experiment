@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 16:07:42 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/27 20:35:16 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/27 20:38:37 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ bool VulkanRenderer::checkInstanceExtensionSupport(std::vector<const char *> *ch
 	return (true);
 }
 
-bool VulkanRenderer::checkDeviceExtensionSupport(VkPhysicalDevice device) 
+bool VulkanRenderer::checkDeviceExtensionSupport(VkPhysicalDevice device)
 {
 	uint32_t extensionCount = 0;
 	vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
@@ -209,7 +209,7 @@ bool VulkanRenderer::checkDeviceExtensionSupport(VkPhysicalDevice device)
 			if (strcmp(deviceExtension, extension.extensionName) == 0)
 			{
 				hasExtension = true;
-				break ;
+				break;
 			}
 		}
 		if (!hasExtension)
@@ -229,8 +229,13 @@ bool VulkanRenderer::checkDeviceSuitable(VkPhysicalDevice device)
 	*/
 	QueueFamilyIndices indices = getQueueFamilies(device);
 	bool extensionSupported = checkDeviceExtensionSupport(device);
-
-	return (indices.isValid() && extensionSupported);
+	bool swapChainValid = false;
+	if (extensionSupported)
+	{
+		SwapChainDetails SwapChainDetails = getSwapChainDetails(device);
+		swapChainValid = !SwapChainDetails.presentationModes.empty() && !SwapChainDetails.formats.empty();
+	}
+	return (indices.isValid() && extensionSupported && swapChainValid);
 }
 
 QueueFamilyIndices VulkanRenderer::getQueueFamilies(VkPhysicalDevice device)
@@ -259,7 +264,7 @@ QueueFamilyIndices VulkanRenderer::getQueueFamilies(VkPhysicalDevice device)
 	return (indices);
 }
 
-SwapChainDetails VulkanRenderer::getSwapChainDetails(VkPhysicalDevice device) 
+SwapChainDetails VulkanRenderer::getSwapChainDetails(VkPhysicalDevice device)
 {
 	SwapChainDetails swapChainDetails;
 
