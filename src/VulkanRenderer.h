@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 16:08:26 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/27 20:44:04 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/27 21:38:14 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 #include <vector>
 #include <set>
+#include <algorithm>
 
 #include "Utilities.h"
 
@@ -44,11 +45,12 @@ private:
 	VkQueue graphicsQueue;
 	VkQueue presentationQueue;
 	VkSurfaceKHR surface;
+	VkSwapchainKHR swapchain;
 
 	void createInstance();
 	void createLogicalDevice();
 	void createSurface();
-	void createSwapChain();
+	void createSwapchain();
 
 
 	void getPhysicalDevice();
@@ -62,6 +64,8 @@ private:
 	SwapChainDetails getSwapChainDetails(VkPhysicalDevice device);
 
 	VkSurfaceFormatKHR chooseBestSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &formats);
+	VkPresentModeKHR chooseBestPresentationMode(const std::vector<VkPresentModeKHR> presentationModes);
+	VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &surfaceCapabilities);
 
 #ifdef VK_DEBUG
 	const bool enableValidationLayers = true;
