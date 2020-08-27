@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 16:07:42 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/27 23:40:24 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/27 23:44:13 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void VulkanRenderer::createInstance()
 	{
 		throw std::runtime_error("Failed to create VkInstance!");
 	}
+	printf("Create Vulkan instance success\n");
 }
 
 void VulkanRenderer::createLogicalDevice()
@@ -138,6 +139,7 @@ void VulkanRenderer::createLogicalDevice()
 	// Get handle to graphics queue
 	vkGetDeviceQueue(mainDevice.logicalDevice, indices.graphicsFamily, 0, &graphicsQueue);
 	vkGetDeviceQueue(mainDevice.logicalDevice, indices.presentationFamily, 0, &presentationQueue);
+	printf("Create Vulkan logical device success\n");
 }
 
 void VulkanRenderer::createSurface()
@@ -145,6 +147,7 @@ void VulkanRenderer::createSurface()
 	VkResult result = glfwCreateWindowSurface(instance, window, nullptr, &surface);
 	if (result != VK_SUCCESS)
 		throw std::runtime_error("Failed to create Vulkan surface!");
+	printf("Create Vulkan surface success\n");
 }
 
 void VulkanRenderer::createSwapchain()
@@ -198,6 +201,7 @@ void VulkanRenderer::createSwapchain()
 	VkResult result = vkCreateSwapchainKHR(mainDevice.logicalDevice, &swapChainCreateInfo, nullptr, &swapchain);
 	if (result != VK_SUCCESS)
 		throw std::runtime_error("Failed to create swapchain!");
+	printf("Create Vulkan swapchain success\n");
 }
 
 void VulkanRenderer::getPhysicalDevice()
