@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 16:07:42 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/27 21:51:33 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/27 23:40:24 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,8 +215,11 @@ void VulkanRenderer::getPhysicalDevice()
 
 	for (const auto &device : deviceList)
 	{
-		if (checkDeviceSuitable(device))
+		VkPhysicalDeviceProperties deviceProperties;
+		vkGetPhysicalDeviceProperties(device, &deviceProperties);
+		if (checkDeviceSuitable(device) && deviceProperties.vendorID == NVIDIA_VID)
 		{
+			printf("Using device: %s\n", deviceProperties.deviceName);
 			mainDevice.physicalDevice = device;
 			break;
 		}

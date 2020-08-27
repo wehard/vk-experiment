@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 16:08:26 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/27 21:49:21 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/27 23:38:22 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include "Utilities.h"
 
 #define VK_DEBUG 1
+#define NVIDIA_VID 4318
 
 class VulkanRenderer
 {
@@ -52,13 +53,11 @@ private:
 	void createSurface();
 	void createSwapchain();
 
-
 	void getPhysicalDevice();
 
 	bool checkInstanceExtensionSupport(std::vector<const char *> *checkExtensions);
 	bool checkDeviceExtensionSupport(VkPhysicalDevice device);
 	bool checkDeviceSuitable(VkPhysicalDevice device);
-
 
 	QueueFamilyIndices getQueueFamilies(VkPhysicalDevice device);
 	SwapChainDetails getSwapChainDetails(VkPhysicalDevice device);
