@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 16:08:26 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/28 00:12:30 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/28 00:45:05 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ private:
 #endif
 
 	const std::vector<const char *> validationLayers = {
-		"VK_LAYER_KHRONOS_validation"};
+		"VK_LAYER_KHRONOS_validation",
+		"VK_LAYER_LUNARG_standard_validation"
+		};
 	bool checkValidationLayerSupport();
 };

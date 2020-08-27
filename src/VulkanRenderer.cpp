@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 16:07:42 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/28 00:26:06 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/28 00:56:29 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ VulkanRenderer::~VulkanRenderer()
 
 void VulkanRenderer::createInstance()
 {
-	if (this->enableValidationLayers && !checkValidationLayerSupport())
+	if (enableValidationLayers && !checkValidationLayerSupport())
 		throw std::runtime_error("Validation layers requested, but not available!");
 
 	VkApplicationInfo appInfo = {};
@@ -65,7 +65,7 @@ void VulkanRenderer::createInstance()
 	appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
 	appInfo.pEngineName = "No Engine";
 	appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
-	appInfo.apiVersion = VK_API_VERSION_1_1;
+	appInfo.apiVersion = VK_API_VERSION_1_2;
 
 	VkInstanceCreateInfo createInfo = {};
 	createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
@@ -79,6 +79,7 @@ void VulkanRenderer::createInstance()
 	{
 		instanceExtensions.push_back(glfwExtensions[i]);
 	}
+	instanceExtensions.push_back("VK_EXT_debug_report"); // test to get debugging working
 	if (!checkInstanceExtensionSupport(&instanceExtensions))
 		throw std::runtime_error("VkInstance does not support required extensions!");
 	createInfo.enabledExtensionCount = static_cast<uint32_t>(instanceExtensions.size());
@@ -86,15 +87,15 @@ void VulkanRenderer::createInstance()
 
 	// Validation layers setup
 
-	if (this->enableValidationLayers)
+	if (enableValidationLayers)
 	{
-		createInfo.enabledLayerCount = static_cast<uint32_t>(this->validationLayers.size());
-		createInfo.ppEnabledLayerNames = this->validationLayers.data();
+		createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
+		createInfo.ppEnabledLayerNames = validationLayers.data();
 	}
 	else
 	{
 		createInfo.enabledLayerCount = 0;
-		createInfo.ppEnabledLayerNames = nullptr;
+		// createInfo.ppEnabledLayerNames = nullptr;
 	}
 
 	VkResult result = vkCreateInstance(&createInfo, nullptr, &instance);
@@ -457,10 +458,9 @@ bool VulkanRenderer::checkValidationLayerSupport()
 	std::vector<VkLayerProperties> availableLayers(layerCount);
 	vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data());
 
-	for (const char *layerName : this->validationLayers)
+	for (const char *layerName : validationLayers)
 	{
 		bool layerFound = false;
-
 		for (const auto &layerProperties : availableLayers)
 		{
 			if (strcmp(layerName, layerProperties.layerName) == 0)
@@ -469,11 +469,8 @@ bool VulkanRenderer::checkValidationLayerSupport()
 				break;
 			}
 		}
-
 		if (!layerFound)
-		{
 			return false;
-		}
 	}
 
 	return true;
