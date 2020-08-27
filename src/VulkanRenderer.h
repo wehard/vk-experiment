@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 16:08:26 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/27 18:57:03 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/27 20:08:40 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
+
 #include <vector>
+#include <set>
+
 #include "Utilities.h"
 
 #define VK_DEBUG 1
-
 
 class VulkanRenderer
 {
@@ -40,9 +42,13 @@ private:
 		VkDevice logicalDevice;
 	} mainDevice;
 	VkQueue graphicsQueue;
+	VkQueue presentationQueue;
+	VkSurfaceKHR surface;
 
 	void createInstance();
 	void createLogicalDevice();
+	void createSurface();
+
 
 	void getPhysicalDevice();
 

@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 20:43:47 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/27 18:57:31 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/27 19:41:03 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int main()
 	if (vulkanRenderer.init(window) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	
-	while (!glfwWindowShouldClose(window))
+	while (!glfwWindowShouldClose(window) && !glfwGetKey(window, GLFW_KEY_ESCAPE))
 	{
 		glfwPollEvents();
 	}
