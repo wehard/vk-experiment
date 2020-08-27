@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 16:08:26 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/27 18:41:57 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/27 18:57:03 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 #include <vector>
 #include "Utilities.h"
 
+#define VK_DEBUG 1
+
+
 class VulkanRenderer
 {
 public:
@@ -25,6 +28,7 @@ public:
 	void cleanup();
 	void run();
 	~VulkanRenderer();
+
 private:
 	GLFWwindow *window;
 
@@ -42,8 +46,18 @@ private:
 
 	void getPhysicalDevice();
 
-	bool checkInstanceExtensionSupport(std::vector<const char*> *checkExtensions);
+	bool checkInstanceExtensionSupport(std::vector<const char *> *checkExtensions);
 	bool checkDeviceSuitable(VkPhysicalDevice device);
 
 	QueueFamilyIndices getQueueFamilies(VkPhysicalDevice device);
+
+#ifdef VK_DEBUG
+	const bool enableValidationLayers = true;
+#else
+	const bool enableValidationLayers = false;
+#endif
+
+	const std::vector<const char *> validationLayers = {
+		"VK_LAYER_KHRONOS_validation"};
+	bool checkValidationLayerSupport();
 };
