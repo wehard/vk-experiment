@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 16:07:42 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/27 20:08:45 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/27 20:20:54 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,8 @@ void VulkanRenderer::createLogicalDevice()
 	deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 	deviceCreateInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
 	deviceCreateInfo.pQueueCreateInfos = queueCreateInfos.data();
-	deviceCreateInfo.enabledExtensionCount = 0;
-	deviceCreateInfo.ppEnabledExtensionNames = nullptr;
+	deviceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(deviceExtensions.size());
+	deviceCreateInfo.ppEnabledExtensionNames = deviceExtensions.data();
 
 	VkPhysicalDeviceFeatures deviceFeatures = {}; // empty for now
 	deviceCreateInfo.pEnabledFeatures = &deviceFeatures;
@@ -192,6 +192,32 @@ bool VulkanRenderer::checkInstanceExtensionSupport(std::vector<const char *> *ch
 	return (true);
 }
 
+bool VulkanRenderer::checkDeviceExtensionSupport(VkPhysicalDevice device) 
+{
+	uint32_t extensionCount = 0;
+	vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
+	if (extensionCount == 0)
+		return (false);
+	std::vector<VkExtensionProperties> extensions(extensionCount);
+	vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, extensions.data());
+
+	for (const auto deviceExtension : deviceExtensions)
+	{
+		bool hasExtension = false;
+		for (const auto &extension : extensions)
+		{
+			if (strcmp(deviceExtension, extension.extensionName) == 0)
+			{
+				hasExtension = true;
+				break ;
+			}
+		}
+		if (!hasExtension)
+			return (false);
+	}
+	return (true);
+}
+
 bool VulkanRenderer::checkDeviceSuitable(VkPhysicalDevice device)
 {
 	/*
@@ -202,7 +228,9 @@ bool VulkanRenderer::checkDeviceSuitable(VkPhysicalDevice device)
 	vkGetPhysicalDeviceFeatures(device, &dewviceFeatures);
 	*/
 	QueueFamilyIndices indices = getQueueFamilies(device);
-	return (indices.isValid());
+	bool extensionSupported = checkDeviceExtensionSupport(device);
+
+	return (indices.isValid() && extensionSupported);
 }
 
 QueueFamilyIndices VulkanRenderer::getQueueFamilies(VkPhysicalDevice device)

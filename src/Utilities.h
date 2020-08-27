@@ -6,11 +6,17 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 18:10:56 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/27 19:55:12 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/27 20:12:30 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
+
+#include <vector>
+
+const std::vector<const char*> deviceExtensions = {
+	VK_KHR_SWAPCHAIN_EXTENSION_NAME
+};
 
 // Indices (locations) of Queue Families
 

@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 16:08:26 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/27 20:08:40 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/27 20:13:59 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,9 @@ private:
 	void getPhysicalDevice();
 
 	bool checkInstanceExtensionSupport(std::vector<const char *> *checkExtensions);
+	bool checkDeviceExtensionSupport(VkPhysicalDevice device);
 	bool checkDeviceSuitable(VkPhysicalDevice device);
+
 
 	QueueFamilyIndices getQueueFamilies(VkPhysicalDevice device);
 
@@ -64,6 +66,6 @@ private:
 #endif
 
 	const std::vector<const char *> validationLayers = {
-		"VK_LAYER_KHRONOS_validation"};
+		"VK_LAYER_LUNARG_standard_validation"};
 	bool checkValidationLayerSupport();
 };
