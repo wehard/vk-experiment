@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 18:10:56 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/27 20:28:27 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/28 00:06:42 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,10 @@ struct SwapChainDetails
 	VkSurfaceCapabilitiesKHR surfaceCapabilities;
 	std::vector<VkSurfaceFormatKHR> formats;
 	std::vector<VkPresentModeKHR> presentationModes; // e.g. mailbox, immediate etc. 
+};
+
+struct SwapchainImage
+{
+	VkImage image;
+	VkImageView imageView;
 };
