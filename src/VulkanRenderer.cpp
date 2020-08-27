@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 16:07:42 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/27 20:38:37 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/27 20:56:22 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,15 @@ void VulkanRenderer::createSurface()
 	VkResult result = glfwCreateWindowSurface(instance, window, nullptr, &surface);
 	if (result != VK_SUCCESS)
 		throw std::runtime_error("Failed to create Vulkan surface!");
+}
+
+void VulkanRenderer::createSwapChain()
+{
+	SwapChainDetails swapChainDetails = getSwapChainDetails(mainDevice.physicalDevice);
+	// surface format
+
+	// presentation mode
+	// image resolution
 }
 
 void VulkanRenderer::getPhysicalDevice()
@@ -288,6 +297,27 @@ SwapChainDetails VulkanRenderer::getSwapChainDetails(VkPhysicalDevice device)
 		vkGetPhysicalDeviceSurfacePresentModesKHR(device, surface, &presentationCount, swapChainDetails.presentationModes.data());
 	}
 	return (swapChainDetails);
+}
+
+// Format could be any but for now:
+// format		:	VK_FORMAT_R8G8B8A8_UNORM
+// colorSpace	:	VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
+VkSurfaceFormatKHR VulkanRenderer::chooseBestSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &formats)
+{
+	VkSurfaceFormatKHR surfaceFormat = {};
+	if (formats.size() == 1 && formats[0].format == VK_FORMAT_UNDEFINED)
+	{
+		surfaceFormat.format = VK_FORMAT_R8G8B8A8_UNORM;
+		surfaceFormat.colorSpace = VK_COLOR_SPACE_SRGB_NONLINEAR_KHR;
+		return (surfaceFormat);
+	}
+	for (const auto &format : formats)
+	{
+		if ((format.format == VK_FORMAT_R8G8B8A8_UNORM || format.format == VK_FORMAT_B8G8R8A8_UNORM) 
+			&& format.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
+			return (format);
+	}
+	return (formats[0]);
 }
 
 bool VulkanRenderer::checkValidationLayerSupport()

@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 16:08:26 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/27 20:28:47 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/27 20:44:04 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ private:
 	void createInstance();
 	void createLogicalDevice();
 	void createSurface();
+	void createSwapChain();
 
 
 	void getPhysicalDevice();
@@ -59,6 +60,8 @@ private:
 
 	QueueFamilyIndices getQueueFamilies(VkPhysicalDevice device);
 	SwapChainDetails getSwapChainDetails(VkPhysicalDevice device);
+
+	VkSurfaceFormatKHR chooseBestSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &formats);
 
 #ifdef VK_DEBUG
 	const bool enableValidationLayers = true;
