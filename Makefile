@@ -6,7 +6,7 @@
 #    By: wkorande <willehard@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/20 19:39:21 by wkorande          #+#    #+#              #
-#    Updated: 2020/08/28 13:48:31 by wkorande         ###   ########.fr        #
+#    Updated: 2020/08/28 15:49:34 by wkorande         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,22 +20,40 @@ VULKAN_SDK_PATH =  /usr/lib/x86_64-linux-gnu #/home/user/VulkanSDK/x.x.x.x/x86_6
 LDFLAGS = -L$(VULKAN_SDK_PATH) `pkg-config --static --libs glfw3` -lvulkan
 CC=g++
 
+SHADER_DIR=./shaders
+SHADERS =	$(wildcard $(SHADER_DIR)/*.vert)\
+			$(wildcard $(SHADER_DIR)/*.frag)
+SPVS = 	$(patsubst $(SHADER_DIR)/%.vert,$(SHADER_DIR)/%_vert.spv,$(SHADERS))\
+		$(patsubst $(SHADER_DIR)/%.frag,$(SHADER_DIR)/%_frag.spv,$(SHADERS))
+
 all: $(NAME)
 
-$(NAME): shaders
-	$(CC) $(CFLAGS) -o $(NAME) -I src $(SRC) $(LDFLAGS)
+$(NAME): $(SPVS)
+	@printf "compiling: $(NAME)\n"
+	@$(CC) $(CFLAGS) -o $(NAME) -I src $(SRC) $(LDFLAGS)
 
-shaders:
-	cd ./shaders;\
-	./compile_shaders.sh
+# shaders:
+# 	cd ./shaders;\
+# 	./compile_shaders.sh
+
+$(SHADER_DIR)/%_vert.spv: $(SHADER_DIR)/%.vert
+	@printf "compiling: "
+	@glslangValidator -o $@ -V $<
+
+$(SHADER_DIR)/%_frag.spv: $(SHADER_DIR)/%.frag
+	@printf "compiling: "
+	@glslangValidator -o $@ -V $<
+
 
 debug:
 	$(CC) -g $(CFLAGS) -o $(NAME) $(SRC) $(LDFLAGS)
 
 clean:
-	rm -f $(NAME)
-	rm -f shaders/*.spv
 
-re: clean all
+fclean: clean
+	@rm -f $(NAME)
+	@rm -f shaders/*.spv
 
-.PHONY: all clean re shaders
+re: fclean all
+
+.PHONY: all clean fclean re shaders

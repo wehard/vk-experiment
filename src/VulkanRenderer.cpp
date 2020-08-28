@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 16:07:42 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/28 13:49:20 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/28 14:47:19 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,13 +221,17 @@ void VulkanRenderer::createSwapchain()
 
 void VulkanRenderer::createGraphicsPipeline() 
 {
-	auto vertexShaderCode = readFile("shaders/shader_vert.spv");
-	auto fragmentShaderCode = readFile("shaders/shader_frag.spv");
+	const std::string vertexShaderFilename = "shaders/shader_vert.spv";
+	const std::string fragmentShaderFilename = "shaders/shader_frag.spv";
+	auto vertexShaderCode = readFile(vertexShaderFilename);
+	auto fragmentShaderCode = readFile(fragmentShaderFilename);
 
 	// build shader modules to link to graphics pipeline
 	VkShaderModule vertexShaderModule = createShaderModule(vertexShaderCode);
+	printf("Created shader module for: %s\n", vertexShaderFilename.c_str());
 	VkShaderModule fragmentShaderModule = createShaderModule(fragmentShaderCode);
-
+	printf("Created shader module for: %s\n", fragmentShaderFilename.c_str());
+	
 	// shader stage create info for graphics pipeline
 	VkPipelineShaderStageCreateInfo vertexShaderCreateInfo = {};
 	vertexShaderCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
