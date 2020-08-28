@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 16:08:26 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/28 13:22:05 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/28 18:39:20 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <vector>
 #include <set>
 #include <algorithm>
+#include <array>
 
 #include "Utilities.h"
 
@@ -49,6 +50,10 @@ private:
 	VkSwapchainKHR swapchain;
 	std::vector<SwapchainImage> swapchainImages;
 
+	VkPipeline graphicsPipeline;
+	VkPipelineLayout pipelineLayout;
+	VkRenderPass renderPass;
+
 	VkFormat swapchainImageFormat;
 	VkExtent2D swapchainExtent;
 
@@ -56,6 +61,7 @@ private:
 	void createLogicalDevice();
 	void createSurface();
 	void createSwapchain();
+	void createRenderPass();
 	void createGraphicsPipeline();
 
 	void getPhysicalDevice();
