@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 16:07:42 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/28 13:16:32 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/28 13:49:20 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,8 +221,8 @@ void VulkanRenderer::createSwapchain()
 
 void VulkanRenderer::createGraphicsPipeline() 
 {
-	auto vertexShaderCode = readFile("shaders/vert.spv");
-	auto fragmentShaderCode = readFile("shaders/frag.spv");
+	auto vertexShaderCode = readFile("shaders/shader_vert.spv");
+	auto fragmentShaderCode = readFile("shaders/shader_frag.spv");
 
 	// build shader modules to link to graphics pipeline
 	VkShaderModule vertexShaderModule = createShaderModule(vertexShaderCode);

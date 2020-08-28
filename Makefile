@@ -6,7 +6,7 @@
 #    By: wkorande <willehard@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/20 19:39:21 by wkorande          #+#    #+#              #
-#    Updated: 2020/08/27 22:03:26 by wkorande         ###   ########.fr        #
+#    Updated: 2020/08/28 13:48:31 by wkorande         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,15 +22,20 @@ CC=g++
 
 all: $(NAME)
 
-$(NAME):
+$(NAME): shaders
 	$(CC) $(CFLAGS) -o $(NAME) -I src $(SRC) $(LDFLAGS)
+
+shaders:
+	cd ./shaders;\
+	./compile_shaders.sh
 
 debug:
 	$(CC) -g $(CFLAGS) -o $(NAME) $(SRC) $(LDFLAGS)
 
 clean:
 	rm -f $(NAME)
+	rm -f shaders/*.spv
 
 re: clean all
 
-.PHONY: all clean re
+.PHONY: all clean re shaders
