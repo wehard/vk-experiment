@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 16:08:26 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/29 00:31:51 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/29 01:21:21 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ public:
 private:
 	GLFWwindow *window;
 
+	int currentFrame = 0;
 	// Vulkan
 	VkInstance instance;
 	struct
@@ -65,8 +66,9 @@ private:
 	VkExtent2D swapchainExtent;
 
 	// sync
-	VkSemaphore imageAvailable;
-	VkSemaphore renderFinished;
+	std::vector<VkSemaphore> imageAvailable;
+	std::vector<VkSemaphore> renderFinished;
+	std::vector<VkFence> drawFences;
 
 	void createInstance();
 	void createLogicalDevice();
