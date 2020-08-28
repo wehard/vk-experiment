@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 16:08:26 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/28 11:43:07 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/28 12:59:15 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ private:
 	void createLogicalDevice();
 	void createSurface();
 	void createSwapchain();
+	void createGraphicsPipeline();
 
 	void getPhysicalDevice();
 
@@ -71,7 +72,7 @@ private:
 	VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &surfaceCapabilities);
 
 	VkImageView createImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectFlags);
-
+	VkShaderModule createShaderModule(const std::vector<char> &src);
 #ifdef VK_DEBUG
 	const bool enableValidationLayers = true;
 #else

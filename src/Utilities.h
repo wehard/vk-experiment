@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 18:10:56 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/28 00:06:42 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/28 12:56:10 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include <vector>
 #include <vulkan/vulkan.h>
+#include <fstream>
 
 const std::vector<const char*> deviceExtensions = {
 	VK_KHR_SWAPCHAIN_EXTENSION_NAME
@@ -44,3 +45,16 @@ struct SwapchainImage
 	VkImage image;
 	VkImageView imageView;
 };
+
+static std::vector<char> readFile(const std::string &filename)
+{
+	std::ifstream file(filename, std::ios::binary | std::ios::ate);
+	if (!file.is_open())
+		throw std::runtime_error("Failed to open file!");
+	size_t fileSize = (size_t)file.tellg();
+	std::vector<char> fileBuffer(fileSize);
+	file.seekg(0); // move read pos to the start of file
+	file.read(fileBuffer.data(), fileSize);
+	file.close();
+	return (fileBuffer);
+}

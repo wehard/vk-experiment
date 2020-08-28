@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 16:07:42 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/28 12:14:20 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/28 13:16:32 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int VulkanRenderer::init(GLFWwindow *newWindow)
 		getPhysicalDevice();
 		createLogicalDevice();
 		createSwapchain();
+		createGraphicsPipeline();
 	}
 	catch (const std::runtime_error &e)
 	{
@@ -216,6 +217,37 @@ void VulkanRenderer::createSwapchain()
 		swapchainImages.push_back(swapchainImage);
 	}
 	printf("Create Vulkan swapchain success\n");
+}
+
+void VulkanRenderer::createGraphicsPipeline() 
+{
+	auto vertexShaderCode = readFile("shaders/vert.spv");
+	auto fragmentShaderCode = readFile("shaders/frag.spv");
+
+	// build shader modules to link to graphics pipeline
+	VkShaderModule vertexShaderModule = createShaderModule(vertexShaderCode);
+	VkShaderModule fragmentShaderModule = createShaderModule(fragmentShaderCode);
+
+	// shader stage create info for graphics pipeline
+	VkPipelineShaderStageCreateInfo vertexShaderCreateInfo = {};
+	vertexShaderCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+	vertexShaderCreateInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;
+	vertexShaderCreateInfo.module = vertexShaderModule;
+	vertexShaderCreateInfo.pName = "main"; // points to first glsl function called
+
+	VkPipelineShaderStageCreateInfo fragmentShaderCreateInfo = {};
+	fragmentShaderCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+	fragmentShaderCreateInfo.stage = VK_SHADER_STAGE_FRAGMENT_BIT;
+	fragmentShaderCreateInfo.module = fragmentShaderModule;
+	fragmentShaderCreateInfo.pName = "main"; // points to first glsl function called
+
+	VkPipelineShaderStageCreateInfo shaderStages[] = { vertexShaderCreateInfo, fragmentShaderCreateInfo };
+
+	// create pipeline
+
+	// destroy modules as they are not needed anymore
+	vkDestroyShaderModule(mainDevice.logicalDevice, fragmentShaderModule, nullptr);
+	vkDestroyShaderModule(mainDevice.logicalDevice, vertexShaderModule, nullptr);
 }
 
 void VulkanRenderer::getPhysicalDevice()
@@ -441,6 +473,20 @@ VkImageView VulkanRenderer::createImageView(VkImage image, VkFormat format, VkIm
 	if (result != VK_SUCCESS)
 		throw std::runtime_error("Failed to create an Image View!");
 	return (imageView);
+}
+
+VkShaderModule VulkanRenderer::createShaderModule(const std::vector<char> &code) 
+{
+	VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
+	shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+	shaderModuleCreateInfo.codeSize = code.size();
+	shaderModuleCreateInfo.pCode = reinterpret_cast<const uint32_t*>(code.data());
+
+	VkShaderModule shaderModule;
+	VkResult result = vkCreateShaderModule(mainDevice.logicalDevice, &shaderModuleCreateInfo, nullptr, &shaderModule);
+	if (result != VK_SUCCESS)
+		throw std::runtime_error("Failed to create shader module!");
+	return (shaderModule);
 }
 
 bool VulkanRenderer::checkValidationLayerSupport()
