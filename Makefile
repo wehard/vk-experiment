@@ -6,7 +6,7 @@
 #    By: wkorande <willehard@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/20 19:39:21 by wkorande          #+#    #+#              #
-#    Updated: 2020/08/28 15:49:34 by wkorande         ###   ########.fr        #
+#    Updated: 2020/08/28 15:50:53 by wkorande         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,9 +26,9 @@ SHADERS =	$(wildcard $(SHADER_DIR)/*.vert)\
 SPVS = 	$(patsubst $(SHADER_DIR)/%.vert,$(SHADER_DIR)/%_vert.spv,$(SHADERS))\
 		$(patsubst $(SHADER_DIR)/%.frag,$(SHADER_DIR)/%_frag.spv,$(SHADERS))
 
-all: $(NAME)
+all: $(NAME) $(SPVS)
 
-$(NAME): $(SPVS)
+$(NAME):
 	@printf "compiling: $(NAME)\n"
 	@$(CC) $(CFLAGS) -o $(NAME) -I src $(SRC) $(LDFLAGS)
 
