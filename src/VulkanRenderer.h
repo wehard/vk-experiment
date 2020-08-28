@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 16:08:26 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/28 23:50:18 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/29 00:31:51 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ class VulkanRenderer
 public:
 	VulkanRenderer();
 	int init(GLFWwindow *newWindow);
+	void draw();
 	void cleanup();
 	void run();
 	~VulkanRenderer();
@@ -63,6 +64,10 @@ private:
 	VkFormat swapchainImageFormat;
 	VkExtent2D swapchainExtent;
 
+	// sync
+	VkSemaphore imageAvailable;
+	VkSemaphore renderFinished;
+
 	void createInstance();
 	void createLogicalDevice();
 	void createSurface();
@@ -72,6 +77,7 @@ private:
 	void createFramebuffers();
 	void createCommandPool();
 	void createCommandBuffers();
+	void createSynchronization();
 
 	void recordCommands();
 
@@ -90,6 +96,7 @@ private:
 
 	VkImageView createImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectFlags);
 	VkShaderModule createShaderModule(const std::vector<char> &code);
+
 
 #ifdef VK_DEBUG
 	const bool enableValidationLayers = true;
