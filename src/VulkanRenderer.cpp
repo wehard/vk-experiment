@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 16:07:42 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/28 00:56:29 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/28 12:14:20 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,30 +79,23 @@ void VulkanRenderer::createInstance()
 	{
 		instanceExtensions.push_back(glfwExtensions[i]);
 	}
-	instanceExtensions.push_back("VK_EXT_debug_report"); // test to get debugging working
 	if (!checkInstanceExtensionSupport(&instanceExtensions))
 		throw std::runtime_error("VkInstance does not support required extensions!");
 	createInfo.enabledExtensionCount = static_cast<uint32_t>(instanceExtensions.size());
 	createInfo.ppEnabledExtensionNames = instanceExtensions.data();
 
 	// Validation layers setup
-
 	if (enableValidationLayers)
 	{
 		createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
 		createInfo.ppEnabledLayerNames = validationLayers.data();
 	}
 	else
-	{
 		createInfo.enabledLayerCount = 0;
-		// createInfo.ppEnabledLayerNames = nullptr;
-	}
 
 	VkResult result = vkCreateInstance(&createInfo, nullptr, &instance);
 	if (result != VK_SUCCESS)
-	{
 		throw std::runtime_error("Failed to create VkInstance!");
-	}
 	printf("Create Vulkan instance success\n");
 }
 
