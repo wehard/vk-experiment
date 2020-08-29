@@ -6,12 +6,12 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/29 13:21:58 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/29 14:23:17 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/29 14:59:18 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Mesh.h"
-#include <string.h>
+#include <cstring>
 
 Mesh::Mesh()
 {
@@ -78,7 +78,7 @@ void Mesh::createVertexBuffer(std::vector<Vertex> *vertices)
 	// map memory to vertex vuffer
 	void *data;
 	vkMapMemory(device, vertexBufferMemory, 0, bufferInfo.size, 0, &data);
-	memcpy(data, vertices->data(), vertices->size());
+	memcpy(data, vertices->data(), (size_t)bufferInfo.size);
 	vkUnmapMemory(device, vertexBufferMemory);
 }
 
@@ -93,7 +93,7 @@ uint32_t Mesh::findMemoryTypeIndex(uint32_t allowedTypes, VkMemoryPropertyFlags 
 	{
 		if ((allowedTypes & (1 << i)) && (memoryProperties.memoryTypes[i].propertyFlags & properties) == properties)
 		{
-			return (i);
+			return i;
 		}
 	}
 	throw std::runtime_error("Failed to find required memory type!");
