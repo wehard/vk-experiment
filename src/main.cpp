@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 20:43:47 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/29 01:00:12 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/29 17:35:17 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void initWindow(std::string title, int width, int height)
 
 int main()
 {
-	initWindow("Vulkan", 800, 600);
+	initWindow("Vulkan", 800, 800);
 	if (vulkanRenderer.init(window) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	glfwShowWindow(window);

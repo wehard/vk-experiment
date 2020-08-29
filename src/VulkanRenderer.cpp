@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 16:07:42 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/29 15:09:49 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/29 17:34:54 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,11 @@ int VulkanRenderer::init(GLFWwindow *newWindow)
 		getPhysicalDevice();
 		createLogicalDevice();
 
-		std::vector<Vertex> meshVertices = {
-			{{0.0, -0.4, 0.0}, {1.0, 0.0, 0.0}},
-			{{0.4, 0.4, 0.0}, {0.0, 1.0, 0.0}},
-			{{-0.4, 0.4, 0.0}, {0.0, 0.0, 1.0}}};
+		// std::vector<Vertex> meshVertices = {
+		// 	{{0.0, -0.4, 0.0}, {1.0, 0.0, 0.0}},
+		// 	{{0.4, 0.4, 0.0}, {0.0, 1.0, 0.0}},
+		// 	{{-0.4, 0.4, 0.0}, {0.0, 0.0, 1.0}}};
+		std::vector<Vertex> meshVertices = loadObjFile("covid.obj");
 		firstMesh = Mesh(mainDevice.physicalDevice, mainDevice.logicalDevice, &meshVertices);
 
 		createSwapchain();
@@ -139,7 +140,7 @@ void VulkanRenderer::createInstance()
 	appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
 	appInfo.pEngineName = "No Engine";
 	appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
-	appInfo.apiVersion = VK_API_VERSION_1_2;
+	appInfo.apiVersion = VK_API_VERSION_1_1;
 
 	VkInstanceCreateInfo createInfo = {};
 	createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
@@ -727,13 +728,13 @@ bool VulkanRenderer::checkDeviceExtensionSupport(VkPhysicalDevice device)
 
 bool VulkanRenderer::checkDeviceSuitable(VkPhysicalDevice device)
 {
-	/*
+	
 	VkPhysicalDeviceProperties deviceProperties;
 	vkGetPhysicalDeviceProperties(device, &deviceProperties);
 	
 	VkPhysicalDeviceFeatures dewviceFeatures;
 	vkGetPhysicalDeviceFeatures(device, &dewviceFeatures);
-	*/
+	
 	QueueFamilyIndices indices = getQueueFamilies(device);
 	bool extensionSupported = checkDeviceExtensionSupport(device);
 	bool swapChainValid = false;
