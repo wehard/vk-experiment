@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 18:10:56 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/29 01:10:31 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/29 13:03:19 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,17 @@
 #include <vector>
 #include <vulkan/vulkan.h>
 #include <fstream>
+#include <glm/glm.hpp>
 
 const int MAX_FRAME_DRAWS = 2;
 
 const std::vector<const char*> deviceExtensions = {
 	VK_KHR_SWAPCHAIN_EXTENSION_NAME
+};
+
+struct Vertex
+{
+	glm::vec3 pos;
 };
 
 // Indices (locations) of Queue Families

@@ -6,14 +6,15 @@
 #    By: wkorande <willehard@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/20 19:39:21 by wkorande          #+#    #+#              #
-#    Updated: 2020/08/28 15:50:53 by wkorande         ###   ########.fr        #
+#    Updated: 2020/08/29 14:13:36 by wkorande         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=vk-experiment
 
 SRC= src/main.cpp\
-	src/VulkanRenderer.cpp
+	src/VulkanRenderer.cpp\
+	src/Mesh.cpp
 
 
 VULKAN_SDK_PATH =  /usr/lib/x86_64-linux-gnu #/home/user/VulkanSDK/x.x.x.x/x86_64

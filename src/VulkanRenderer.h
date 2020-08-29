@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 16:08:26 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/29 01:21:21 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/29 14:10:14 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <algorithm>
 #include <array>
 
+#include "Mesh.h"
 #include "Utilities.h"
 
 #define VK_DEBUG 1
@@ -39,6 +40,10 @@ private:
 	GLFWwindow *window;
 
 	int currentFrame = 0;
+
+
+	Mesh firstMesh;
+
 	// Vulkan
 	VkInstance instance;
 	struct
