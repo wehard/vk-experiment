@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 16:07:42 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/29 15:00:06 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/29 15:09:49 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int VulkanRenderer::init(GLFWwindow *newWindow)
 		createLogicalDevice();
 
 		std::vector<Vertex> meshVertices = {
-			{{0.0, -0.4, 0.0}},
-			{{0.4, 0.4, 0.0}},
-			{{-0.4, 0.4, 0.0}}};
+			{{0.0, -0.4, 0.0}, {1.0, 0.0, 0.0}},
+			{{0.4, 0.4, 0.0}, {0.0, 1.0, 0.0}},
+			{{-0.4, 0.4, 0.0}, {0.0, 0.0, 1.0}}};
 		firstMesh = Mesh(mainDevice.physicalDevice, mainDevice.logicalDevice, &meshVertices);
 
 		createSwapchain();
@@ -391,11 +391,16 @@ void VulkanRenderer::createGraphicsPipeline()
 	bindingDescription.inputRate = VK_VERTEX_INPUT_RATE_VERTEX; // modify if instanced drawing
 
 	// define vertex attribute position
-	std::array<VkVertexInputAttributeDescription, 1> attributeDescriptions;
+	std::array<VkVertexInputAttributeDescription, 2> attributeDescriptions;
 	attributeDescriptions[0].binding = 0;
 	attributeDescriptions[0].location = 0;
 	attributeDescriptions[0].format = VK_FORMAT_R32G32B32_SFLOAT;
 	attributeDescriptions[0].offset = offsetof(Vertex, pos);
+	// color attribute
+	attributeDescriptions[1].binding = 0;
+	attributeDescriptions[1].location = 1;
+	attributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
+	attributeDescriptions[1].offset = offsetof(Vertex, col);
 
 	// -- vertex input --
 	VkPipelineVertexInputStateCreateInfo vertexInputCreateInfo = {};
@@ -628,8 +633,8 @@ void VulkanRenderer::recordCommands()
 		// bind pipeline
 		vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
 
-		VkBuffer vertexBuffers[] = { firstMesh.getVertexBuffer() };
-		VkDeviceSize offsets[] = { 0 };
+		VkBuffer vertexBuffers[] = {firstMesh.getVertexBuffer()};
+		VkDeviceSize offsets[] = {0};
 		vkCmdBindVertexBuffers(commandBuffers[i], 0, 1, vertexBuffers, offsets);
 
 		// execute pipeline

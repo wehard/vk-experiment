@@ -6,7 +6,7 @@
 /*   By: wkorande <willehard@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 18:10:56 by wkorande          #+#    #+#             */
-/*   Updated: 2020/08/29 13:03:19 by wkorande         ###   ########.fr       */
+/*   Updated: 2020/08/29 15:06:44 by wkorande         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ const std::vector<const char*> deviceExtensions = {
 struct Vertex
 {
 	glm::vec3 pos;
+	glm::vec3 col;
 };
 
 // Indices (locations) of Queue Families
